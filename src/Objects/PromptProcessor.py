@@ -14,6 +14,24 @@ class PromptProcessor():
         self.__prompts = prompts
         self.__functions_definition = functions_definition
         self.__llm = llm
+    
+    def process(self, prompt: str):
+        """ Process the prompt to get its json (python dict) output. """
+        output = {}
+
+        # Prompt
+        output['prompt'] = prompt.prompt
+
+        # Name
+        fn_name = self.generate_fn_name(prompt)
+        output['name'] = fn_name
+
+        # Parameters
+        params = self.generate_parameters(prompt, fn_name)
+        output['parameters'] = params
+
+        return output
+
 
     def get_available_functions(self) -> List[str]:
         """ Returns the list of available functions """
@@ -61,17 +79,34 @@ class PromptProcessor():
                 definition = function_def
         
         # Getting parameters
+        output = {}
+        previous_gen = ''
         for param in definition.parameters:
-            pass
+            previous_gen = ''
+            for arg in output.keys():
+                previous_gen = previous_gen + arg + '=' + str(output[arg]) + '\n'
+            previous_gen = previous_gen + param + '='
+            if definition.parameters[param]['type'] == 'string':
+                output[param] = self.generate_str_parameter(prompt_message, definition, previous_gen)
+            elif definition.parameters[param]['type'] == 'number':
+                output[param] = self.generate_int_parameter(prompt_message, definition, previous_gen)
+        return output
 
     def generate_int_parameter(self, prompt_message: str, function: FunctionDefinition, previous_gen: str) -> int:
-        prompt = f"To solve the prompt {prompt_message}, you will use the following function: {function.full_definition}. Provide each parameter, followed by '\n' character."
+        prompt = f"To solve the prompt {prompt_message}, you will use the following function: {function.full_definition}. Provide each parameter. Keep it concise and don't add custom fields."
         
-        function_progress = ''
+        argument_progress = ''
         while True:
             for generation in self.__llm.predict_multiple_tokens(
-                prompt_message=prompt_message,
+                prompt_message=prompt,
                 previous_tokens=previous_gen+argument_progress):
+
+                if generation == '':
+                    try:
+                        return float(argument_progress)
+                    except ValueError:
+                        print(f'debug: Erreur de conversion de "{argument_progress}"')
+                        argument_progress = ''
 
                 # Skip token if it's not in the regex / invalid
                 regex = '-0123456789.\n'
@@ -108,12 +143,15 @@ class PromptProcessor():
                 break
 
     def generate_str_parameter(self, prompt_message: str, function: FunctionDefinition, previous_gen: str) -> int:
-        prompt = f"To solve the prompt {prompt_message}, you will use the following function: {function.full_definition}. Provide each parameter, followed by '\n' character."
+        prompt = f"To solve the prompt {prompt_message}, you will use the following function: {function.full_definition}. Provide each parameter. Keep it concise and don't add custom fields."
         
         argument_progress = ''
-        while '\n' not in argument_progress:
-            argument_progress = argument_progress + self.__llm.predict_token(
+        while True:
+            generation = self.__llm.predict_token(
                 prompt_message=prompt,
                 previous_tokens=previous_gen + argument_progress
             )
-        return (argument_progress.split('\n')[0])
+            if generation == '':
+                return argument_progress
+            
+            argument_progress = argument_progress + generation

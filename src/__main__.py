@@ -25,14 +25,9 @@ def main() -> None:
         prompts, functions_definition, llm
     )
 
-    # print(processor.generate_int_parameter('What is the sum of 420 and 4 ?', functions_definition[0], 'parameters:\na='))
-    print(processor.generate_str_parameter('Greet John.', functions_definition[1], 'parameters:\nname='))
-
-    exit(0)
-
     for prompt in prompts:
-        print(processor.generate_fn_name(prompt))
-        
+        output = processor.process(prompt=prompt)
+        print(output)
 
     return None
 
