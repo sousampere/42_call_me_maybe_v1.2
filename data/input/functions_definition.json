@@ -16,21 +16,9 @@
   },
   {
     "name": "fn_greet",
-    "description": "Generate a greeting message for a person by name.",
+    "description": "Greet the given name.",
     "parameters": {
       "name": {
-        "type": "string"
-      }
-    },
-    "returns": {
-      "type": "string"
-    }
-  },
-  {
-    "name": "fn_reverse_string",
-    "description": "Reverse a string and return the reversed result.",
-    "parameters": {
-      "s": {
         "type": "string"
       }
     },
@@ -48,24 +36,6 @@
     },
     "returns": {
       "type": "number"
-    }
-  },
-  {
-    "name": "fn_substitute_string_with_regex",
-    "description": "Replace all occurrences matching a regex pattern in a string.",
-    "parameters": {
-      "source_string": {
-        "type": "string"
-      },
-      "regex": {
-        "type": "string"
-      },
-      "replacement": {
-        "type": "string"
-      }
-    },
-    "returns": {
-      "type": "string"
     }
   }
 ]

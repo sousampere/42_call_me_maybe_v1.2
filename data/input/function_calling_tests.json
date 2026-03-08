@@ -1,35 +1,20 @@
 [
   {
-    "prompt": "What is the sum of 2 and 3?"
+    "prompt": "What is the sum of 21 and 21?"
   },
   {
-    "prompt": "What is the sum of 265 and 345?"
+    "prompt": "What is the sum of 12 and 34?"
   },
   {
-    "prompt": "Greet shrek"
+    "prompt": "Greet gtourdia"
   },
   {
-    "prompt": "Greet john"
+    "prompt": "Greet lbonnet"
   },
   {
-    "prompt": "Reverse the string 'hello'"
+    "prompt": "Substitute the word 'ice' with 'fire' in 'The ice wizard is drinking a beer.'"
   },
   {
-    "prompt": "Reverse the string 'world'"
-  },
-  {
-    "prompt": "What is the square root of 16?"
-  },
-  {
-    "prompt": "Calculate the square root of 144"
-  },
-  {
-    "prompt": "Replace all numbers in \"Hello 34 I'm 233 years old\" with NUMBERS"
-  },
-  {
-    "prompt": "Replace all vowels in 'Programming is fun' with asterisks"
-  },
-  {
-    "prompt": "Substitute the word 'cat' with 'dog' in 'The cat sat on the mat with another cat'"
+    "prompt": "What is the square root of 64?'"
   }
 ]
