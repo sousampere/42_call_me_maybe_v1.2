@@ -1,15 +1,19 @@
 
-from typing import Generator
+from typing import Any, Generator
 
 from src import Small_LLM_Model
 
+
 class Model(Small_LLM_Model):
     """ LLM Class with useful methods """
-    def predict_token(self, prompt_message: str, previous_tokens: str = '', skip: int = 0):
+    def predict_token(self, prompt_message: str,
+                      previous_tokens: str = '',
+                      skip: int = 0) -> Any:
         """ Get the next token from the original prompt + the previously
          generated tokens. """
         # Original prompt
-        prompt = f"<|im_start|>user\n{prompt_message}<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n{previous_tokens}"
+        prompt = f"<|im_start|>user\n{prompt_message}<|im_end|>\n" + \
+            f"<|im_start|>assistant\n<think>\n\n</think>\n\n{previous_tokens}"
 
         # Encoding to tensors
         tensors = self.encode(prompt)
@@ -20,17 +24,21 @@ class Model(Small_LLM_Model):
         # Sorting most probable tokens
         sorted_tokens = sorted(probabilities, reverse=True)
 
-        # Pick the highest probability token (Skiping unwanted tokens if needed)
+        # Pick the highest probability token
+        # (Skiping unwanted tokens if needed)
         token = probabilities.index(sorted_tokens[skip])
 
         # Return the highest pronbability token
         return self.decode(token)
 
-    def predict_multiple_tokens(self, prompt_message: str, previous_tokens: str = '', skip: int = 0) -> Generator:
+    def predict_multiple_tokens(self, prompt_message: str,
+                                previous_tokens: str = '',
+                                skip: int = 0) -> Generator[str]:
         """ Get the next token from the original prompt + the previously
          generated tokens. """
         # Original prompt
-        prompt = f"<|im_start|>user\n{prompt_message}<|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n{previous_tokens}"
+        prompt = f"<|im_start|>user\n{prompt_message}<|im_end|>\n" + \
+            f"<|im_start|>assistant\n<think>\n\n</think>\n\n{previous_tokens}"
 
         # Encoding to tensors
         tensors = self.encode(prompt)
@@ -41,7 +49,8 @@ class Model(Small_LLM_Model):
         # Sorting most probable tokens
         sorted_tokens = sorted(probabilities, reverse=True)
 
-        # Pick the highest probability token (Skiping unwanted tokens if needed)
+        # Pick the highest probability token
+        # (Skiping unwanted tokens if needed)
         token = probabilities.index(sorted_tokens[skip])
 
         # print(prompt)
@@ -52,5 +61,3 @@ class Model(Small_LLM_Model):
 
         # Return the highest pronbability token
         return self.decode(token)
-    
-    "To solve the prompt What is the sum of 2 and 4 ?, you will use the following function: {'name': 'fn_add_numbers', 'description': 'Add two numbers together and return their sum.', 'parameters': {'a': {'type': 'number'}, 'b': {'type': 'number'}}, 'returns': {'type': 'number'}}. Give each parameter, followed by '\n' character."

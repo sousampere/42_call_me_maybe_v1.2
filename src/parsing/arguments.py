@@ -1,10 +1,10 @@
 
-from argparse import ArgumentParser
+from argparse import ArgumentParser, Namespace
 
 # ajouter un arg pour selectionner le modele
 
 
-def get_arguments():
+def get_arguments() -> Namespace:
     parser = ArgumentParser(
         prog="python -m src",
         description="A 42 project realised by gtourdia.",
@@ -31,15 +31,15 @@ def get_arguments():
     parser.add_argument(
         '-o', '--output',
         help='Path of the output file.',
-        default='data/output/function_calls.json',
+        default='data/output/function_calling_result.json',
         required=False
     )
 
     # Verbose
     parser.add_argument(
-        '-v', '--verbose',
+        '-v', '--visualize',
         action='store_true',
-        help='Activate verbose.',
+        help='Activate vizualisation.',
         required=False
     )
 

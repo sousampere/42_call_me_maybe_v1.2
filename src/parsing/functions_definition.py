@@ -17,7 +17,6 @@ class FunctionDefinition(BaseModel):
 
     @model_validator(mode='after')
     def validation(self) -> FunctionDefinition:
-        
         for key in self.parameters.keys():
             if 'type' not in self.parameters[key].keys():
                 raise FunctionsDefinitionError('Unsupported argument type '
@@ -26,14 +25,15 @@ class FunctionDefinition(BaseModel):
         return self
 
 
-
-def get_functions_definition(functions_definition_path: str) -> List[FunctionDefinition]:
+def get_functions_definition(
+        functions_definition_path: str) -> List[FunctionDefinition]:
     """ Load the functions definition file as a list of dicts. """
     try:
         with open(functions_definition_path, 'r') as file:
             data = json.load(file)
         if (len(data) == 0):
-            raise FunctionsDefinitionError('No function found in your functions definition file.')
+            raise FunctionsDefinitionError('No function found in your '
+                                           'functions definition file.')
 
         # Sending functions to pydantic to verify their content
         function_list = []
@@ -47,11 +47,19 @@ def get_functions_definition(functions_definition_path: str) -> List[FunctionDef
                 ))
         return function_list
     except FileNotFoundError:
-        raise FunctionsDefinitionError('Your functions definition file was not found.')
+        raise FunctionsDefinitionError('Your functions '
+                                       'definition file was not found.')
     except json.JSONDecodeError:
-        raise FunctionsDefinitionError('Your functions definition file contain invalid json.')
+        raise FunctionsDefinitionError('Your functions'
+                                       ' definition file contain'
+                                       ' invalid json.')
     except PermissionError:
-        raise FunctionsDefinitionError('Not enough permissions to open your functions definition file.')
+        raise FunctionsDefinitionError('Not enough permissions '
+                                       'to open your functions '
+                                       'definition file.')
     except Exception:
-        raise FunctionsDefinitionError("Unable to use your functions definition file. Please make "
-                                       "sure that your file respects the json structure expected.")
+        raise FunctionsDefinitionError("Unable to use your "
+                                       "functions definition "
+                                       "file. Please make "
+                                       "sure that your file respects "
+                                       "the json structure expected.")

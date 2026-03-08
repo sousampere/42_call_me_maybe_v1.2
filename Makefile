@@ -35,7 +35,7 @@ DEFAULT_OUTPUT		=	data/output/function_calling_result.json
 install:
 	@echo "$(YELLOW)╔════════════════════════════════════════════════════════════════╗"
 	@echo "$(YELLOW)║                                                                ║"
-	@echo "$(YELLOW)║  44  44    2222    $(GREEN)Made with ♥ by $(AUTHOR) $(YELLOW)          ║"
+	@echo "$(YELLOW)║  44  44    2222    $(GREEN)Made with ♥ by $(AUTHOR) $(YELLOW)                    ║"
 	@echo "$(YELLOW)║  44  44   22  22   Project: $(CYAN)$(PROJECT_NAME) $(YELLOW)                     ║"
 	@echo "$(YELLOW)║  444444      22    Started in: $(CYAN)$(PROJECT_START_DATE) $(YELLOW)                     ║"
 	@echo "$(YELLOW)║      44     22     Github: $(CYAN)$(GITHUB) $(YELLOW)     ║"
@@ -52,5 +52,22 @@ sync:
 run:
 	uv run python -m src
 
+visualize:
+	uv run python -m src -v
+
 help:
 	uv run python -m src --help
+
+debug:
+	uv run python -m pdb -m src
+
+clean:
+	rm -rf .mypy_cache
+
+lint:
+	uv run python -m flake8 src
+	mypy . --warn-return-any --warn-unused-ignores --ignore-missing-imports --disallow-untyped-defs --check-untyped-defs
+
+lint-strict:
+	uv run python -m flake8 src
+	mypy . --strict
