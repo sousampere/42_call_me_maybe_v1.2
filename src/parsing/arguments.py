@@ -5,6 +5,8 @@ from argparse import ArgumentParser, Namespace
 
 
 def get_arguments() -> Namespace:
+    """ Initialize the arguments for the program
+     and return them """
     parser = ArgumentParser(
         prog="python -m src",
         description="A 42 project realised by gtourdia.",

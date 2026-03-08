@@ -11,6 +11,7 @@ class Visualizer():
 
     @staticmethod
     def visualize() -> None:
+        """ Prints a nice visualization """
         print('\033[2J\033[1;1H')
         print("""
 \033[1;30m
@@ -75,6 +76,8 @@ class Visualizer():
 
     @staticmethod
     def apply_face(name: str) -> None:
+        """ Get an ascii face depending
+         on the input 'name' """
         searching = [
             '\033[1;37m                              ',
             '          ██         ██       ',
@@ -122,6 +125,8 @@ class Visualizer():
             screen_y += 1
 
     def process(self, processor: PromptProcessor) -> List[Any]:
+        """ Use the given processor to process its data,
+         and visualize it in the process. """
         screen_x = 70
         screen_y = 15
         processed = 1
@@ -146,13 +151,12 @@ class Visualizer():
                     self.apply_face('happy')
                     print(f'\033[0;32m\033[{screen_y + 3};{screen_x}HParam' +
                           'eters: processing...')
-                    time.sleep(1)
+                    time.sleep(2)
                     prompt_output = state
                     del state['current_state']
             output.append(prompt_output)
             processed += 1
-            print(f'\033[0;32m\033[{screen_y + 5};{screen_x}HProg' +
-                  f'ression: {(processed / processor.nb_prompts) * 10}%')
+            print('\033[1000;1000H')
         return output
 
 

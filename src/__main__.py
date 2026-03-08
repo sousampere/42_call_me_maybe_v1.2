@@ -1,29 +1,44 @@
 
+import sys
+import json
+from pathlib import Path
+
 from src import Model
 from src import get_arguments
 from src import get_functions_definition
 from src import get_prompts
 from src import PromptProcessor
 from src import Visualizer
-import json
-from pathlib import Path
 
 
 def main() -> None:
 
     # Parsing
-    args = get_arguments()
+    try:
+        args = get_arguments()
+    except Exception as e:
+        print(f'\033[0;31mInvalid arguments. Please use --help to get help.'
+              f' ({e})', file=sys.stderr)
+        exit(1)
+
+    # Getting functions definitions & prompts
+    try:
+        functions_definition = get_functions_definition(
+            args.functions_definition)
+        prompts = get_prompts(
+            args.input)
+    except Exception as e:
+        print(f'\033[0;31m{e}', file=sys.stderr)
+        exit(1)
 
     # Loading model
-    llm = Model(model_name=args.model, device=args.device)
-
-    # Getting functions definitions
-    functions_definition = get_functions_definition(
-        args.functions_definition)
-
-    # Getting prompts
-    prompts = get_prompts(
-        args.input)
+    try:
+        llm = Model(model_name=args.model, device=args.device)
+    except Exception as e:
+        print('\033[0;31m Error when loading the model. '
+              'Please make sure to provide a correct model name/device. '
+              f'Details: {e}', file=sys.stderr)
+        exit(1)
 
     processor = PromptProcessor(
         prompts, functions_definition, llm

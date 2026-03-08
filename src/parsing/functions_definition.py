@@ -5,10 +5,12 @@ from pydantic import BaseModel, model_validator
 
 
 class FunctionsDefinitionError(Exception):
+    """ Function definition error """
     pass
 
 
 class FunctionDefinition(BaseModel):
+    """ Function definiton example with pydantic """
     name: str
     description: str
     parameters: Dict[str, Dict[str, str]]
@@ -17,6 +19,7 @@ class FunctionDefinition(BaseModel):
 
     @model_validator(mode='after')
     def validation(self) -> FunctionDefinition:
+        """ Validate data after first verifications """
         for key in self.parameters.keys():
             if 'type' not in self.parameters[key].keys():
                 raise FunctionsDefinitionError('Unsupported argument type '

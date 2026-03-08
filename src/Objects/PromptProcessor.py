@@ -17,7 +17,11 @@ class PromptProcessor():
         self.nb_prompts = len(prompts)
 
     def process(self) -> List[Any]:
-        """ Process the prompt to get its json (python dict) output. """
+        """Process the list of prompts
+
+        Returns:
+            List[Any]: list of outputs for each process
+        """
         output = []
 
         for prompt in self.__prompts:
@@ -41,7 +45,15 @@ class PromptProcessor():
         return output
 
     def yield_process(self, prompt: Prompt) -> Generator[Dict[str, Any]]:
-        """ Process the prompt to get its json (python dict) output. """
+        """Process the data in a Generator object. Useful for step by
+        step motinoring
+
+        Args:
+            prompt (Prompt): Prompt to process
+
+        Yields:
+            Generator[Dict[str, Any]]: current state in a dict
+        """
         output: Dict[str, Any] = {
             'prompt': None,
             'name': None,
@@ -134,6 +146,17 @@ class PromptProcessor():
     def generate_int_parameter(self, prompt_message: Prompt,
                                function: FunctionDefinition,
                                previous_gen: str) -> float:
+        """Generate an float parameter, from a given function
+        and its parameters.
+
+        Args:
+            prompt_message (Prompt): original prompt
+            function (FunctionDefinition): function definiton
+            previous_gen (str): previous arguments generated
+
+        Returns:
+            float: float generated
+        """
         prompt = f"To solve the prompt {prompt_message}, you " + \
             f"will use the following function: {function.full_definition}." + \
             " Provide each parameter. Keep it concise and don't add" + \
@@ -186,14 +209,25 @@ class PromptProcessor():
 
     def generate_str_parameter(self, prompt_message: Prompt,
                                function: FunctionDefinition,
-                               previous_gen: str) -> str:
+                               previous_gen: str) -> Any:
+        """Generate a string parameter, from a given function
+        and its parameters.
+
+        Args:
+            prompt_message (Prompt): original prompt
+            function (FunctionDefinition): function definiton
+            previous_gen (str): previous arguments generated
+
+        Returns:
+            str: string generated
+        """
         prompt = f"To solve the prompt {prompt_message}, you" + \
             " will use the following function:" + \
             f" {function.full_definition}. Provide each " + \
             "parameter. Keep it concise and don't add custom fields."
 
         argument_progress = ''
-        while True:
+        while '\n' not in argument_progress:
             generation = self.__llm.predict_token(
                 prompt_message=prompt,
                 previous_tokens=previous_gen + argument_progress
@@ -203,5 +237,10 @@ class PromptProcessor():
 
             argument_progress = argument_progress + generation
 
+            if '\n' in argument_progress:
+                return argument_progress.split('\n')[0]
+        return argument_progress
+
     def get_prompts(self) -> List[Prompt]:
+        """ Getter function for the PromptProcessor.__prompts """
         return self.__prompts

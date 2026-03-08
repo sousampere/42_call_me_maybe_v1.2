@@ -5,10 +5,12 @@ from pydantic import BaseModel
 
 
 class PromptFileError(Exception):
+    """ Prompt file error """
     pass
 
 
 class Prompt(BaseModel):
+    """ Prompt error """
     prompt: str
 
 

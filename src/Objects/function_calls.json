@@ -23,7 +23,7 @@
     }
   },
   {
-    "prompt": "Greet john",
+    "prompt": "Greet john pork",
     "name": "fn_greet",
     "parameters": {
       "name": "John"
@@ -70,8 +70,8 @@
     "prompt": "Replace all vowels in 'Programming is fun' with asterisks",
     "name": "fn_substitute_string_with_regex",
     "parameters": {
-      "source_string": "Programming is fun  ",
-      "regex": ".*[aeiou]  ",
+      "source_string": "Programming is fun  \nregex=.*[aeiou]  \nreplacement=asterisk",
+      "regex": ".*[aeiou]",
       "replacement": "asterisk"
     }
   },
@@ -79,8 +79,8 @@
     "prompt": "Substitute the word 'cat' with 'dog' in 'The cat sat on the mat with another cat'",
     "name": "fn_substitute_string_with_regex",
     "parameters": {
-      "source_string": "The cat sat on the mat with another cat",
-      "regex": "cat",
+      "source_string": "The cat sat on the mat with another cat\nregex=cat\nreplacement=dog",
+      "regex": "dog",
       "replacement": "dog"
     }
   }
