@@ -19,7 +19,6 @@ class FunctionDefinition(BaseModel):
     def validation(self) -> FunctionDefinition:
         
         for key in self.parameters.keys():
-            print(self.parameters[key].keys())
             if 'type' not in self.parameters[key].keys():
                 raise FunctionsDefinitionError('Unsupported argument type '
                                                f'for parameter {key} in '

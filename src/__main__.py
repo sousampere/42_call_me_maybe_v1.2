@@ -2,6 +2,8 @@
 from src import Model, Small_LLM_Model
 from src import get_arguments
 from src import get_functions_definition
+from src import get_prompts
+from src import PromptProcessor
 
 def main() -> None:
 
@@ -16,15 +18,25 @@ def main() -> None:
         args.functions_definition)
 
     # Getting prompts
-    functions_definition = get_functions_definition(
-        args.functions_definition)
+    prompts = get_prompts(
+        args.input)
 
-    output = ''
-    while True:
-        output = output + llm.predict_token('What is the sum of 2 and 2 ?', output, 2)
-        print(output)
+    processor = PromptProcessor(
+        prompts, functions_definition, llm
+    )
+
+    # print(processor.generate_int_parameter('What is the sum of 420 and 4 ?', functions_definition[0], 'parameters:\na='))
+    print(processor.generate_str_parameter('Greet John.', functions_definition[1], 'parameters:\nname='))
+
+    exit(0)
+
+    for prompt in prompts:
+        print(processor.generate_fn_name(prompt))
+        
 
     return None
 
 if __name__ == '__main__':
     main()
+
+    
