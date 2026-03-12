@@ -145,25 +145,11 @@ On this project, we first need to parse informations from a configuration file. 
 - [Qwenn control tokens & chat template](https://qwen.readthedocs.io/en/latest/getting_started/concepts.html)
 - Google Gemini was used for questions related to understanding constained decoding
 
-
-
-## 🚀 Authors and contributions
+## 🚀 Author
 
 [gtourdia / @sousampere](https://github.com/sousampere)
 
-- Configuration, Cell and Maze objects
-- Pathfinding and generation algorithm
-- Package build
-- Readme
+I am a student at the 42 Mulhouse school. Most of my public projects will be from this school, while I will keep private most of my other projects.
 
-[lbonnet / @kletsol](https://github.com/kletsol)
-
-- Controller object (Maze interruption)
-- MazeVisualizer object to visualize the maze
-- Colors, Reset, Pause interactions
-- Various bonuses
-- Flake8, since [gtourdia](https://github.com/sousampere) didn't really pay attention about it ;)
-
-Other tasks were done by the two of us.
 
 ![42Mulhouse](https://camo.githubusercontent.com/242a608f6e84c19ca24b2fb5c5935d921ff5e79090a91d8b2be3c72626c66272/68747470733a2f2f6173736574732e6b6d302e6f6d65726c6f636c69656e74732e636f6d2f636f6d6d756e6974792f63666265356130622d373633372d343361302d393466392d3764663266633238386331642e6a7067)
