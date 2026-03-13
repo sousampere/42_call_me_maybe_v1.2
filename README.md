@@ -148,7 +148,9 @@ On this project, we first need to parse informations from a configuration file. 
 ## 🚀 Author
 
 [gtourdia / @sousampere](https://github.com/sousampere)
-Special thank to: cyakisan, lbonnet, abonnet, htrapp, jeschwar
+Special thank to:
+
+cyakisan, lbonnet, abonnet, htrapp, jeschwar
 
 I am a student at the 42 Mulhouse school. Most of my public projects will be from this school, while I will keep private most of my other projects.
 
