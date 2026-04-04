@@ -1,3 +1,5 @@
+# Please, star my project if you found it useful : )
+
 *This project has been created as part of the 42 curriculum by gtourdia*
 
 # 42 Call_me_maybe
