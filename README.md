@@ -103,6 +103,7 @@ The project uses uv for dependency management and a Makefile to automate core ta
 I Added the following bonuses:
 - Custom visualizer, with the -v or --visualize flag
 - Hardware acceleration with the -d or --device flag
+- Model choosing with -m (Only works with some Qwen models, else it will throw an error).
 
 ![Video](https://i.ibb.co/hx5gwN6T/Enregistrement-de-l-e-cran-2026-03-08-a-16-42-20.gif)
 
